@@ -10,7 +10,7 @@
 
 ## Motivation
 
-Sentry [breadcrumbs](https://sentry.io/features/breadcrumbs/) allow one to trace down the root cause of an error. Breadcrumbs can include arbitrary data, including log messages. Roarr Sentry integration adds Roarr logs to Sentry breadcrumbs to give a greater context about every issue raised on Sentry.
+Sentry [breadcrumbs](https://sentry.io/features/breadcrumbs/) allow one to trace down the root cause of an error. Breadcrumbs can include arbitrary data, including log messages. Roarr Sentry integration adds Roarr logs to Sentry breadcrumbs to give a richer context about every issue raised on Sentry.
 
 ## Usage
 

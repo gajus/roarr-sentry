@@ -17,6 +17,9 @@
       "@babel/register"
     ]
   },
+  "dependencies": {
+    "roarr": "^2.15.4"
+  },
   "description": "Sentry integration that adds Roarr logs to Sentry breadcrumbs.",
   "devDependencies": {
     "@ava/babel": "^1.0.1",
@@ -53,6 +56,7 @@
     "roarr",
     "sentry"
   ],
+  "license": "BSD-3-Clause",
   "main": "./dist/index.js",
   "name": "@roarr/sentry",
   "nyc": {
@@ -68,7 +72,7 @@
     ],
     "sourceMap": false
   },
-  "license": "BSD-3-Clause",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git@github.com:gajus/roarr-sentry.git"
@@ -80,8 +84,5 @@
     "lint": "eslint ./src ./test && flow",
     "test": "NODE_ENV=test ava --serial --verbose"
   },
-  "version": "1.0.0",
-  "dependencies": {
-    "roarr": "^2.15.4"
-  }
+  "version": "1.0.5"
 }

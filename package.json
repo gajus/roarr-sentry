@@ -44,19 +44,6 @@
   "license": "BSD-3-Clause",
   "main": "./dist/index.js",
   "name": "@roarr/sentry",
-  "nyc": {
-    "include": [
-      "src/**/*.js"
-    ],
-    "instrument": false,
-    "reporter": [
-      "text-lcov"
-    ],
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false
-  },
   "private": false,
   "repository": {
     "type": "git",
@@ -65,8 +52,6 @@
   "scripts": {
     "prepare": "husky install",
     "build": "del-cli ./dist && tsc",
-    "create-readme": "gitdown ./.README/README.md --output-file ./README.md",
-    "dev": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --watch",
     "lint": "eslint ./src ./test && flow",
     "test": "NODE_ENV=test ava --serial --verbose"
   },

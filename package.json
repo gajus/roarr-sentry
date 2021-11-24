@@ -50,10 +50,11 @@
     "url": "git@github.com:gajus/roarr-sentry.git"
   },
   "scripts": {
-    "prepare": "husky install",
     "build": "del-cli ./dist && tsc",
     "lint": "eslint ./src ./test && tsc --noEmit",
+    "prepare": "husky install",
     "test": "NODE_ENV=test ava --serial --verbose"
   },
+  "typings": "./dist/src/index.d.ts",
   "version": "1.0.0"
 }

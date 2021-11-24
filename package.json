@@ -42,7 +42,7 @@
     "sentry"
   ],
   "license": "BSD-3-Clause",
-  "main": "./dist/index.js",
+  "main": "./src/dist/index.js",
   "name": "@roarr/sentry",
   "private": false,
   "repository": {

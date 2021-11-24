@@ -52,7 +52,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "del-cli ./dist && tsc",
-    "lint": "eslint ./src ./test && flow",
+    "lint": "eslint ./src ./test && tsc --noEmit",
     "test": "NODE_ENV=test ava --serial --verbose"
   },
   "version": "1.0.0"

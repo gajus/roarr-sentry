@@ -1,7 +1,3 @@
 {
-  "extends": "canonical/ava",
-  "rules": {
-    "filenames/match-regex": 0,
-    "id-length": 0
-  }
+  "extends": "canonical/ava"
 }

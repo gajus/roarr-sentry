@@ -1,20 +1,28 @@
-// @flow
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import test from 'ava';
 import {
   ROARR,
 } from 'roarr';
-import sinon from 'sinon';
-import createRoarrSentryIntegration from '../../../src/factories/createRoarrSentryIntegration';
+import * as sinon from 'sinon';
+import {
+  createRoarrSentryIntegration,
+} from '../../../src/factories/createRoarrSentryIntegration';
 
 test('creates class with CaptureRoarr constructor name', (t) => {
   t.is(createRoarrSentryIntegration().constructor.name, 'CaptureRoarr');
 });
 
+const noop = (): any => {};
+
 test('overrides ROARR.write method', (t) => {
   const originalWrite = ROARR.write;
 
-  createRoarrSentryIntegration().setupOnce();
+  createRoarrSentryIntegration()
+    .setupOnce(
+      noop,
+      noop,
+    );
 
   t.not(ROARR.write, originalWrite);
 });
@@ -26,8 +34,8 @@ test('passes-through calls to ROARR.write', (t) => {
 
   createRoarrSentryIntegration()
     .setupOnce(
-      null,
-      () => {
+      noop,
+      (): any => {
         return {
           addBreadcrumb: () => {},
         };
@@ -59,8 +67,8 @@ test('adds logs to breadcrumbs', (t) => {
 
   createRoarrSentryIntegration()
     .setupOnce(
-      null,
-      () => {
+      noop,
+      (): any => {
         return hub;
       },
     );
@@ -81,7 +89,7 @@ test('adds logs to breadcrumbs', (t) => {
         namespace: 'bar',
       },
     },
-    level: 'fatal',
+    level: 'error',
     message: 'foo',
     type: 'default',
   });

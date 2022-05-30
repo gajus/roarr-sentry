@@ -1,10 +1,8 @@
-import {
-  Severity,
-} from '@sentry/types';
 import type {
   EventProcessor,
   Hub,
   Integration,
+  SeverityLevel,
 } from '@sentry/types';
 import type {
   LogLevelName,
@@ -14,19 +12,19 @@ import {
   getLogLevelName,
 } from 'roarr';
 
-const getSeverity = (logLevelName: LogLevelName) => {
+const getSeverity = (logLevelName: LogLevelName): SeverityLevel => {
   switch (logLevelName) {
     case 'trace':
     case 'debug':
-      return Severity.Debug;
+      return 'debug';
     case 'info':
-      return Severity.Info;
+      return 'info';
     case 'warn':
-      return Severity.Warning;
+      return 'warning';
     case 'error':
-      return Severity.Error;
+      return 'error';
     default:
-      return Severity.Error;
+      return 'error';
   }
 };
 

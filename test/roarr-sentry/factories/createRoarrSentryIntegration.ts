@@ -10,7 +10,9 @@ import {
 } from '../../../src/factories/createRoarrSentryIntegration';
 
 test('creates class with CaptureRoarr constructor name', (t) => {
-  t.is(createRoarrSentryIntegration().constructor.name, 'CaptureRoarr');
+  t.is(createRoarrSentryIntegration({
+    addBreadcrumb: () => {},
+  }).constructor.name, 'CaptureRoarr');
 });
 
 const noop = (): any => {};
@@ -18,11 +20,10 @@ const noop = (): any => {};
 test('overrides ROARR.write method', (t) => {
   const originalWrite = ROARR.write;
 
-  createRoarrSentryIntegration()
-    .setupOnce(
-      noop,
-      noop,
-    );
+  createRoarrSentryIntegration({
+    addBreadcrumb: () => {},
+  })
+    .setupOnce();
 
   t.not(ROARR.write, originalWrite);
 });
@@ -32,15 +33,10 @@ test('passes-through calls to ROARR.write', (t) => {
 
   ROARR.write = spy;
 
-  createRoarrSentryIntegration()
-    .setupOnce(
-      noop,
-      (): any => {
-        return {
-          addBreadcrumb: () => {},
-        };
-      },
-    );
+  createRoarrSentryIntegration({
+    addBreadcrumb: () => {},
+  })
+    .setupOnce();
 
   const payload = JSON.stringify({
     context: {
@@ -55,23 +51,14 @@ test('passes-through calls to ROARR.write', (t) => {
 });
 
 test('adds logs to breadcrumbs', (t) => {
-  const spy = sinon.stub();
+  const addBreadcrumb = sinon.stub();
 
-  ROARR.write = spy;
+  ROARR.write = () => {};
 
-  const hub = {
-    addBreadcrumb: () => {},
-  };
-
-  const addBreadcrumbSpy = sinon.spy(hub, 'addBreadcrumb');
-
-  createRoarrSentryIntegration()
-    .setupOnce(
-      noop,
-      (): any => {
-        return hub;
-      },
-    );
+  createRoarrSentryIntegration({
+    addBreadcrumb,
+  })
+    .setupOnce();
 
   const payload = JSON.stringify({
     context: {
@@ -82,7 +69,7 @@ test('adds logs to breadcrumbs', (t) => {
 
   ROARR.write(payload);
 
-  t.like(addBreadcrumbSpy.firstCall.firstArg, {
+  t.like(addBreadcrumb.firstCall.firstArg, {
     category: 'bar',
     data: {
       context: {

@@ -1,15 +1,12 @@
-import type {
-  EventProcessor,
-  Hub,
-  Integration,
-  SeverityLevel,
+import {
+  type Breadcrumb,
+  type Integration,
+  type SeverityLevel,
 } from '@sentry/types';
-import type {
-  LogLevelName,
-} from 'roarr';
 import {
   ROARR,
   getLogLevelName,
+  type LogLevelName,
 } from 'roarr';
 
 const getSeverity = (logLevelName: LogLevelName): SeverityLevel => {
@@ -28,19 +25,21 @@ const getSeverity = (logLevelName: LogLevelName): SeverityLevel => {
   }
 };
 
-export const createRoarrSentryIntegration = () => {
+export const createRoarrSentryIntegration = ({
+  addBreadcrumb,
+}: {
+  addBreadcrumb: (breadcrumb: Breadcrumb) => void,
+}) => {
   return new class CaptureRoarr implements Integration {
     public name: string = 'CaptureRoarr';
 
-    public setupOnce = (addGlobalEventProcessor: (callback: EventProcessor) => void, getCurrentHub: () => Hub) => {
+    public setupOnce = () => {
       const originalWrite = ROARR.write;
 
       ROARR.write = (jsonMessage: string) => {
-        const hub = getCurrentHub();
-
         const message = JSON.parse(jsonMessage);
 
-        hub.addBreadcrumb(
+        addBreadcrumb(
           {
             category: message.context.namespace,
             data: {

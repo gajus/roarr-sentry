@@ -16,12 +16,22 @@ Sentry [breadcrumbs](https://sentry.io/features/breadcrumbs/) allow one to trace
 
 ```js
 import {
+  getCurrentHub,
+} from '@sentry/node';
+import {
   createRoarrSentryIntegration,
 } from '@roarr/sentry';
 
 createSentry({
   integrations: [
-    createRoarrSentryIntegration(),
+    createRoarrSentryIntegration({
+      addBreadcrumb: (breadcrumb) => {
+        // Your implementation might vary
+        const hub = getCurrentHub();
+
+        hub.addBreadcrumb(breadcrumb);
+      },
+    }),
   ],
 });
 
